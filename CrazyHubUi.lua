@@ -453,9 +453,38 @@ function CrazyHub:Window(settings)
                 window.CurrentTab = tab
             end)
             
-            function tab:Select()
-                tabBtn.MouseButton1Click:Fire()
-            end
+       function tab:Select()
+    -- Hide all tabs
+    for _, t in pairs(tabGroup.Tabs) do
+        if t.ContentArea then
+            t.ContentArea.Visible = false
+        end
+        if t.Button then
+            tween(t.Button, {BackgroundTransparency = 0.4}, 0.3)
+        end
+        if t.Stroke then
+            tween(t.Stroke, {Thickness = 0}, 0.3)
+        end
+        if t.Label then
+            t.Label.TextColor3 = theme.textSecondary
+        end
+    end
+    
+    -- Show this tab
+    if contentArea then
+        contentArea.Visible = true
+    end
+    if tabBtn then
+        tween(tabBtn, {BackgroundTransparency = 0}, 0.3)
+    end
+    if tabStroke then
+        tween(tabStroke, {Thickness = 2}, 0.3)
+    end
+    if tabLabel then
+        tabLabel.TextColor3 = theme.text
+    end
+    window.CurrentTab = tab
+end
             
             -- Section function
             function tab:Section(options)
